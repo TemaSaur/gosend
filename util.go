@@ -1,7 +1,6 @@
 package main
 
 import (
-	"os"
 	"strings"
 )
 
@@ -36,9 +35,4 @@ func wrap(text string) []string {
 	}
 
 	return result
-}
-
-func getQuery(filename string) string {
-	bytes, _ := os.ReadFile(filename)
-	return string(bytes)
 }

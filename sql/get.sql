@@ -1,4 +1,5 @@
-SELECT (
+SELECT
 	source
 ,	content
-) FROM forms;
+FROM
+	forms;

@@ -35,7 +35,7 @@ func postForm(c *Context) {
 
 	content := buf.String()
 
-	_, err = c.db.Exec(getQuery("sql/create.sql"), source, content)
+	_, err = c.db.Exec(createSql, source, content)
 	if err != nil {
 		c.Write(http.StatusInternalServerError, err.Error())
 		return
@@ -47,7 +47,7 @@ func postForm(c *Context) {
 func getAll(c *Context) {
 	var buf bytes.Buffer
 
-	rows, err := c.db.Query(getQuery("sql/get.sql"))
+	rows, err := c.db.Query(getSql)
 	if err != nil {
 		c.Write(http.StatusInternalServerError, err.Error())
 		return
@@ -83,7 +83,7 @@ func main() {
 	}
 	defer db.Close()
 
-	_, err = db.Exec(getQuery("sql/setup.sql"))
+	_, err = db.Exec(setupSql)
 	if err != nil {
 		log.Fatal(err)
 	}
