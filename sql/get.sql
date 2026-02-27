@@ -1,1 +1,4 @@
-SELECT * FROM forms;
+SELECT (
+	source
+,	content
+) FROM forms;
