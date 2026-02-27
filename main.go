@@ -65,13 +65,13 @@ func getAll(c *Context) {
 		var content string
 		if err := rows.Scan(&source, &content); err != nil {
 			c.Write(http.StatusInternalServerError, "Internal server error")
-			fmt.Printf("scan: %v\n", err)
+			log.Printf("scan: %v\n", err)
 			return
 		}
 
 		fmt.Fprintf(&buf, "SOURCE: %v\n", source)
 		fmt.Fprintf(&buf, "CONTENT:\n")
-		fmt.Fprintf(&buf, strings.Join(wrap(content), "\n"))
+		fmt.Fprint(&buf, strings.Join(wrap(content), "\n"))
 	}
 	c.Write(http.StatusOK, buf.String())
 }
