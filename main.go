@@ -64,7 +64,9 @@ func getAll(c *Context) {
 		var source string
 		var content string
 		if err := rows.Scan(&source, &content); err != nil {
-			log.Fatalf("scan: %v", err)
+			c.Write(http.StatusInternalServerError, "Internal server error")
+			fmt.Printf("scan: %v\n", err)
+			return
 		}
 
 		fmt.Fprintf(&buf, "SOURCE: %v\n", source)
@@ -86,10 +88,10 @@ func main() {
 		log.Fatal(err)
 	}
 
-	http.HandleFunc("/favicon.ico", handler(getIcon))
-	http.HandleFunc("/", handler(handleAll))
-	http.HandleFunc("/get", handlerWithDB(getAll, db))
-	http.HandleFunc("/form/{source}", handlerWithDB(postForm, db))
+	http.HandleFunc("/favicon.ico", handler(getIcon, nil))
+	http.HandleFunc("/", handler(handleAll, nil))
+	http.HandleFunc("/get", handler(getAll, db))
+	http.HandleFunc("/form/{source}", handler(postForm, db))
 
 	port := ":8000"
 	fmt.Printf("Listening on %v\n", port)

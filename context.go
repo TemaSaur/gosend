@@ -22,12 +22,14 @@ func coloredStatus(status int) string {
 
 func (c *Context) Write(status int, body string) {
 	c.w.WriteHeader(status)
-	fmt.Fprintf(c.w, body)
+	fmt.Fprint(c.w, body)
+
+	now := time.Now()
 
 	fmt.Printf(
 		"[INFO] %v %v | %v | %v %v %v\n",
-		time.Now().Format(time.DateOnly),
-		time.Now().Format(time.TimeOnly),
+		now.Format(time.DateOnly),
+		now.Format(time.TimeOnly),
 		coloredStatus(status),
 		c.r.RemoteAddr,
 		c.r.Method,
